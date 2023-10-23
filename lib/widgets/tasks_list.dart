@@ -72,7 +72,9 @@ class TasksList extends StatelessWidget {
             TextButton(
               child: Text("Save"),
               onPressed: () {
-                task.name!.value = taskNameController.text; // Update the task name.
+
+                taskData.editTaskTitle(task,taskNameController.text, user.uid);// Update the task name.
+                task.name!.value = taskNameController.text;
                 Navigator.of(context).pop();
                 ScaffoldMessenger.of(context).showSnackBar(
                   SnackBar(

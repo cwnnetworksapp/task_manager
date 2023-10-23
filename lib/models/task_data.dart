@@ -16,6 +16,12 @@ class TaskData extends GetxController {
   /// The list of tasks, wrapped with the GetX `RxList` for reactivity.
   RxList<Task> _tasks = <Task>[].obs;
 
+
+
+
+
+
+
   // Function to fetch tasks from Firestore and update the local list
   Future<void> updateTasksFromFirestore(String uid) async {
     _tasks.clear(); // Clear the existing local tasks list.
@@ -113,5 +119,43 @@ class TaskData extends GetxController {
     }
 
     refresh();
+  }
+
+
+  /// Edit the title of a task and update it in Firestore.
+  ///
+  /// [task] is the task to be edited.
+  /// [newTitle] is the new title for the task.
+  /// [uid] is the user's unique identifier.
+  Future<void> editTaskTitle(Task task, String newTitle, String uid) async {
+    // Find and update the task in Firebase Firestore based on some identifier (e.g., task name).
+    QuerySnapshot tasks = await FirebaseFirestore.instance
+        .collection('Tasks')
+        .doc(uid)
+        .collection('userTasks')
+        .where('name', isEqualTo: task.name!.value)
+        .get();
+
+    if (tasks.docs.isNotEmpty) {
+      print('Task found in Firebase, updating title...');
+      // Assuming that there is only one matching task, update its title.
+      try {
+        await FirebaseFirestore.instance.collection('Tasks').doc(uid).collection('userTasks')
+            .doc(tasks.docs.first.id)
+            .update({
+          'name': newTitle,
+        });
+        print('Task title updated in Firebase and locally.');
+      } catch (e) {
+        print('Error updating task title in Firebase: $e');
+      }
+
+      // Update the task's title in the local list.
+      task.name!.value = newTitle;
+      refresh();
+      print('Task title updated in Firebase and locally.');
+    } else {
+      print('Task not found in Firebase. No updates performed.');
+    }
   }
 }
