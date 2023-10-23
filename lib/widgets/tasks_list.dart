@@ -92,7 +92,7 @@ class TasksList extends StatelessWidget {
     return Obx(() => ListView.builder(
       itemBuilder: (context, index) {
         final task = taskData.tasks[index];
-        return Obx(() => TaskTile(
+        return TaskTile(
           taskTitle: task.name!.value,
           isChecked: task.isDone,
           checkboxCallback: (checkboxState) {
@@ -103,7 +103,7 @@ class TasksList extends StatelessWidget {
           },
           editCallback: () {
             _showEditTaskDialog(context, task); // Show the edit dialog.
-          },        ));
+          },        );
       },
       itemCount: taskData.taskCount,
     ));

@@ -7,6 +7,12 @@ import 'dart:collection';
 /// A class for managing a list of tasks and their state.
 class TaskData extends GetxController {
 
+  ///Checking weather application is sign out or not
+
+  RxBool isSigningOut = false.obs;
+
+
+
   /// The list of tasks, wrapped with the GetX `RxList` for reactivity.
   RxList<Task> _tasks = <Task>[].obs;
 

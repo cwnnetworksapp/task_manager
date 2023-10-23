@@ -28,7 +28,6 @@ class _TasksScreenState extends State<TasksScreen> {
   TaskData taskData = Get.put(TaskData());
 
   late User _user;
-  bool _isSigningOut = false;
 
   @override
   void initState() {
@@ -72,7 +71,9 @@ class _TasksScreenState extends State<TasksScreen> {
               child: Container(
                 padding: EdgeInsets.only(
                     bottom: MediaQuery.of(context).viewInsets.bottom),
-                child: AddTaskScreen(user: _user,),
+                child: AddTaskScreen(
+                  user: _user,
+                ),
               ),
             ),
           );
@@ -137,7 +138,7 @@ class _TasksScreenState extends State<TasksScreen> {
                             const SizedBox(
                               width: 20,
                             ),
-                            _isSigningOut
+                            taskData.isSigningOut.value
                                 ? const CircularProgressIndicator(
                                     valueColor: AlwaysStoppedAnimation<Color>(
                                         Colors.white),
@@ -156,14 +157,11 @@ class _TasksScreenState extends State<TasksScreen> {
                                       ),
                                     ),
                                     onPressed: () async {
-                                      setState(() {
-                                        _isSigningOut = true;
-                                      });
+                                      taskData.isSigningOut.value = true;
+
                                       await Authentication.signOut(
                                           context: context);
-                                      setState(() {
-                                        _isSigningOut = false;
-                                      });
+
                                       Navigator.of(context).pushReplacement(
                                           _routeToSignInScreen());
                                     },
@@ -186,13 +184,13 @@ class _TasksScreenState extends State<TasksScreen> {
                         ),
                         const SizedBox(height: 8.0),
                         SizedBox(
-                          width: MediaQuery.of(context).size.width * 0.7,
+                          width: MediaQuery.of(context).size.width * 0.5,
                           child: Text(
                             '( ${_user.email!} )',
                             style: TextStyle(
-                              color: CustomColors.firebaseOrange,
-                              fontSize: 16,
-                            ),
+                                color: CustomColors.firebaseGrey,
+                                fontSize: 16,
+                                overflow: TextOverflow.fade),
                             softWrap: true,
                           ),
                         ),

@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:task_manager/screens/tasks_screen.dart';
 
 import '../services/authentication.dart';
@@ -42,13 +43,9 @@ class _GoogleSignInButtonState extends State<GoogleSignInButton> {
           });
 
           if (user != null) {
-            Navigator.of(context).pushReplacement(
-              MaterialPageRoute(
-                builder: (context) => TasksScreen(
-                  user: user,
-                ),
-              ),
-            );
+           Get.to(TasksScreen(
+             user: user,
+           ));
           }
         },
         child: Padding(
