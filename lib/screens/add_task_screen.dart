@@ -4,14 +4,20 @@ import 'package:get/get.dart';
 import 'package:task_manager/models/task_data.dart';
 
 /// A screen for adding a new task.
-class AddTaskScreen extends StatelessWidget {
+class AddTaskScreen extends StatefulWidget {
   /// Constructor for the AddTaskScreen widget.
   AddTaskScreen({super.key, required this.user});
 
-  final User user; // The currently logged-in user.
+  final User user;
+  @override
+  State<AddTaskScreen> createState() => _AddTaskScreenState();
+}
 
-  TaskData taskData = Get.put(TaskData()); // Initialize TaskData for task management.
-
+class _AddTaskScreenState extends State<AddTaskScreen> {
+ // The currently logged-in user.
+  TaskData taskData =
+      Get.put(TaskData());
+ // Initialize TaskData for task management.
   @override
   Widget build(BuildContext context) {
     String? newTaskTitle; // The title of the new task to be added.
@@ -39,12 +45,15 @@ class AddTaskScreen extends StatelessWidget {
               ),
             ),
             TextField(
+
               autofocus: true,
               textAlign: TextAlign.center,
               onChanged: (newText) {
                 newTaskTitle = newText; // Capture the new task title.
+
               },
             ),
+
             ElevatedButton(
               child: const Text(
                 'Add',
@@ -53,11 +62,24 @@ class AddTaskScreen extends StatelessWidget {
                 ),
               ),
               onPressed: () {
-                // Add the new task to the task list using TaskData.
-                taskData.addTask(RxString(newTaskTitle!), user.uid);
-                Navigator.pop(context); // Close the AddTaskScreen.
+                if (newTaskTitle != null && newTaskTitle!.trim().isNotEmpty) {
+                  // Add the new task to the task list using TaskData.
+                  taskData.addTask(RxString(newTaskTitle!), widget.user.uid);
+                  Navigator.pop(context); // Close the AddTaskScreen.
+                } else {
+                  // Show a popup or snackbar to inform the user that the input is empty or only contains spaces.
+                  // You can use Get.snackbar for this purpose.
+                  Get.snackbar(
+                    "Empty Task Title",
+                    "Please enter a non-empty task title.",
+                    snackPosition: SnackPosition.BOTTOM,
+                    backgroundColor: Colors.red,
+                    colorText: Colors.white,
+                  );
+                }
               },
             ),
+
           ],
         ),
       ),

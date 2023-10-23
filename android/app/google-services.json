@@ -12,7 +12,20 @@
           "package_name": "com.example.task_manager"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "56899525162-pghsaq4mns75d3g3r64pq0fp526roetj.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.task_manager",
+            "certificate_hash": "55097ca515a1d5de5eb8d805d636873ebf14f3e2"
+          }
+        },
+        {
+          "client_id": "56899525162-a40m7bsssvpsgd2p8rc3ki3dadei9dlm.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyCA3uBT8gmqnZICb4Z4VfRmmJkBBPYT4E4"
@@ -20,7 +33,12 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "56899525162-a40m7bsssvpsgd2p8rc3ki3dadei9dlm.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         }
       }
     }
